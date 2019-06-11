@@ -1119,6 +1119,9 @@ class Port(object):
     def _is_arch_based(self):
         return self._filesystem.exists('/etc/arch-release')
 
+    def _is_gentoo_based(self):
+        return self._filesystem.exists('/etc/gentoo-release')
+
     def _apache_version(self):
         config = self._executive.run_command([self._path_to_apache(), '-v'])
         return re.sub(r'(?:.|\n)*Server version: Apache/(\d+\.\d+)(?:.|\n)*', r'\1', config)
@@ -1139,6 +1142,8 @@ class Port(object):
                 return 'debian-httpd-' + self._apache_version() + self._debian_php_version() + '.conf'
             if self._is_arch_based():
                 return 'archlinux-httpd.conf'
+            if self._is_gentoo_based():
+                return 'gentoo-httpd-2.4-php7.conf'
         # All platforms use apache2 except for CYGWIN (and Mac OS X Tiger and prior, which we no longer support).
         return 'apache' + self._apache_version() + '-httpd.conf'
 
