@@ -272,7 +272,9 @@ macro(WEBKIT_FRAMEWORK _target)
         ${${_target}_PRIVATE_HEADERS}
         ${${_target}_PUBLIC_HEADERS}
     )
-    target_link_libraries(${_target} ${${_target}_LIBRARIES})
+    if (NOT ${${_target}_LIBRARY_TYPE} MATCHES OBJECT)
+        target_link_libraries(${_target} ${${_target}_LIBRARIES})
+    endif ()
     set_target_properties(${_target} PROPERTIES COMPILE_DEFINITIONS "BUILDING_${_target}")
     set_target_properties(${_target} PROPERTIES FOLDER "${_target}")
 

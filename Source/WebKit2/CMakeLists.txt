@@ -853,4 +853,7 @@ if (NOT PORT STREQUAL "Mac")
     if (SHARED_CORE OR NOT PORT STREQUAL "Qt")
         install(TARGETS WebKit2 DESTINATION "${LIB_INSTALL_DIR}")
     endif ()
+
+    # Hack needed because we build WebKit2 as OBJECT library and it cannot be linked with all dependencies
+    set(EXPORTED_WebKit2_LIBRARIES ${WebKit2_LIBRARIES} PARENT_SCOPE)
 endif ()
