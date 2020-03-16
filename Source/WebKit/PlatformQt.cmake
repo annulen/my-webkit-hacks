@@ -250,15 +250,15 @@ list(REMOVE_DUPLICATES WebKit_SYSTEM_INCLUDE_DIRECTORIES)
 
 if (ENABLE_WEBKIT2)
     if (APPLE)
-        set(WEBKIT2_LIBRARY -Wl,-force_load WebKit2)
+        set(WEBKIT2_LIBRARY -Wl,-force_load $<TARGET_FILE:WebKit2>)
     elseif (MSVC)
-        set(WEBKIT2_LIBRARY "-WHOLEARCHIVE:WebKit2${CMAKE_DEBUG_POSTFIX}")
+        set(WEBKIT2_LIBRARY "-WHOLEARCHIVE:$<TARGET_FILE:WebKit2>")
     elseif (UNIX OR MINGW)
-        set(WEBKIT2_LIBRARY -Wl,--whole-archive WebKit2 -Wl,--no-whole-archive)
+        set(WEBKIT2_LIBRARY -Wl,--whole-archive $<TARGET_FILE:WebKit2> -Wl,--no-whole-archive)
     else ()
         message(WARNING "Unknown system, linking with WebKit2 may fail!")
-        set(WEBKIT2_LIBRARY WebKit2)
     endif ()
+    set(WEBKIT2_LIBRARY ${WEBKIT2_LIBRARY} WebKit2) # For linking dependencies
 endif ()
 
 list(APPEND WebKit_LIBRARIES
