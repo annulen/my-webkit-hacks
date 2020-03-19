@@ -10,13 +10,6 @@ macro(WEBKIT_SET_EXTRA_COMPILER_FLAGS _target)
             set(OLD_COMPILE_FLAGS "")
         endif ()
 
-        if (NOT WIN32)
-            get_target_property(TARGET_TYPE ${_target} TYPE)
-            if (${TARGET_TYPE} STREQUAL "STATIC_LIBRARY") # -fPIC is automatically added to shared libraries
-                set(OLD_COMPILE_FLAGS "-fPIC ${OLD_COMPILE_FLAGS}")
-            endif ()
-        endif ()
-
         # Suppress -Wparentheses-equality warning of Clang
         if (COMPILER_IS_CLANG)
             set(OLD_COMPILE_FLAGS "-Wno-parentheses-equality ${OLD_COMPILE_FLAGS}")
