@@ -261,11 +261,21 @@ if (ENABLE_NETSCAPE_PLUGIN_API)
     add_definitions(-DENABLE_PLUGIN_PROCESS=1)
 endif ()
 
+# Fix for new target-oriented WebKit and modern CMake
+add_definitions(
+    ${Qt5Sensors_DEFINITIONS}
+    ${Qt5Quick_DEFINITIONS}
+    ${Qt5Quick_PRIVATE_DEFINITIONS}
+    ${Qt5WebChannel_DEFINITIONS}
+)
+
 list(APPEND WebKit2_SYSTEM_INCLUDE_DIRECTORIES
     ${GLIB_INCLUDE_DIRS}
     ${GSTREAMER_INCLUDE_DIRS}
+    ${Qt5Sensors_INCLUDE_DIRS}
     ${Qt5Quick_INCLUDE_DIRS}
     ${Qt5Quick_PRIVATE_INCLUDE_DIRS}
+    ${Qt5WebChannel_INCLUDE_DIRS}
     ${SQLITE_INCLUDE_DIR}
 )
 
